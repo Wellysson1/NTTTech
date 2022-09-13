@@ -3,7 +3,7 @@ MODE_DECRYPT = 0
 
 
 def caesar(data, key, mode):
-    alphabet = 'abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWYZ'
+    alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     new_data = ''
     for c in data:
         index = alphabet.find(c)
