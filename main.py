@@ -4,15 +4,14 @@ from numbers import Number
 import numbers
 from string import ascii_lowercase
 from typing import Union
-import json
+import json, requests
 from unicodedata import numeric
 from urllib import response
 from fastapi import FastAPI
 import random
 from pydantic import BaseModel
+from fastapi import Response
 from json import loads
-from fastapi.responses import JSONResponse
-import requests
 
 
 response = requests.get("http://dog-api.kinduff.com/api/facts")
@@ -52,15 +51,12 @@ class json():
     
 print('Encriptada:', ciphered) 
 
-
+class Itemm(BaseModel):
+    frase = str
+    key = int
 
 @app.post("/resolveCifra")
-def decodifica(frase, key):
-    response = requests.get("http://127.0.0.1:8000/resolveCifra")
-    captura = json.loads(response.text)
-    frase = captura['Frase'][0]
-    capturakey = json.loads(response.text)
-    key = capturakey['Key'][0]
+def decodifica(itemm:Itemm):
     new_data = ''
     for c in frase:
         index = alphabet.find(c)
@@ -71,6 +67,7 @@ def decodifica(frase, key):
             new_index = new_index % len(alphabet) %27
             new_data += alphabet[new_index:new_index+1]
     return {"Mensagem Decifrada": new_data}
+    
     
 
 
