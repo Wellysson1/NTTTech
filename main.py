@@ -5,20 +5,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 
-app = FastAPI()
 MODE_ENCRYPT = 1
+app = FastAPI()
 alphabet = 'abcdefghijklmnopqrstuvwyz'
-
-response = requests.get("http://dog-api.kinduff.com/api/facts")
-captura = json.loads(response.content)
-frase = captura['facts'][0]
-
+    
 class Itemm(BaseModel):
     frase : str
     key : int
-    
+
 @app.get("/getCifra")
-def codifica(frase, key, mode):
+def codifica():
     response = requests.get("http://dog-api.kinduff.com/api/facts")
     captura = json.loads(response.content)
     frase = captura['facts'][0]
@@ -40,10 +36,8 @@ def codifica(frase, key, mode):
             new_data += alphabet[new_index:new_index+1]
     return {"frase": new_data, "Chave": key}
 
-
 @app.post("/resolveCifra")
 def decodifica(itemm:Itemm):
-    print(itemm)
     frase, key = itemm
     frase = frase[1]
     key = key[1]
